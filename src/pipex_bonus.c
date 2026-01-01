@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:05:32 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/01 09:18:17 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/01 11:52:37 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ void	here_doc(char *limiter, int argc)
 	close(fd[0]);
 	wait(NULL);
 }
+static	int	open_infile(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		perror(file);
+		fd = open("/dev/nul", O_RDONLY);
+	}
+	return (fd);
+}
 
 static int	setup_files(int argc, char **argv, int *in_file, int *out_file)
 {
@@ -92,9 +104,9 @@ static int	setup_files(int argc, char **argv, int *in_file, int *out_file)
 	else
 	{
 		i = 2;
-		*in_file = open(argv[1], O_RDONLY);
-		if (in_file < 0)
-			error("ERROR: cannot open infile");
+		*in_file = open_infile(argv[1]);
+		dup2(*in_file, 0);
+		close(*in_file);
 		*out_file = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (out_file < 0)
 			error("ERROR: cannot open outfile");

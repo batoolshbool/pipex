@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:00:42 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/01 08:04:46 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/01 11:43:04 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ char	*find_path(char *cmd, char **envp)
 	return (full_path);
 }
 
+char	*get_cmd_path(char **cmd, char **envp)
+{
+	char	*path;
+
+	if (ft_strchr(cmd[0], '/'))
+		path = ft_strdup(cmd[0]);
+	else
+		path = find_path(cmd[0], envp);
+	if (!path)
+	{
+		free_cmd(cmd);
+		error("ERROR: Command not found");
+	}
+	return (path);
+}
+
 void	execute(char *argv, char **envp)
 {
 	char	**cmd;
@@ -71,15 +87,7 @@ void	execute(char *argv, char **envp)
 			free(cmd);
 		error("ERROR: Empty command");
 	}
-	path = find_path(cmd[0], envp);
-	if (!path)
-	{
-		i = 0;
-		while (cmd[i])
-			free(cmd[i++]);
-		free(cmd);
-		error("ERROR: Command not found");
-	}
+	path = get_cmd_path(cmd, envp);
 	if (execve(path, cmd, envp) == -1)
 		error("ERROR: execve failed!");
 }
