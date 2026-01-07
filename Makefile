@@ -8,8 +8,8 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 GNL_DIR = get_next_line
-GNL_SRC = get_next_line/get_next_line.c \
-		get_next_line/get_next_line_utils.c
+GNL_SRC = $(GNL_DIR)/get_next_line.c \
+		$(GNL_DIR)/get_next_line_utils.c
 
 SRC = src/pipex.c src/utils.c
 BONUS_SRC = src/pipex_bonus.c src/utils_bonus.c $(GNL_SRC)
@@ -30,10 +30,8 @@ $(LIBFT):
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 
-bonus: $(LIBFT) $(BONUS_NAME)
-
-$(BONUS_NAME): $(BONUS_OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) -o $(BONUS_NAME)
+bonus: $(LIBFT) $(BONUS_OBJ)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) -o $(NAME)
 
 clean:
 	rm -f $(OBJ) $(BONUS_OBJ)

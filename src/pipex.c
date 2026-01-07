@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 07:56:24 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/01 09:13:09 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/07 07:36:55 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	child_proc(char *argv[], char **envp, int *fd)
 	dup2(fd[1], 1);
 	close(fd[0]);
 	close(file);
+	close(fd[1]);
 	execute(argv[2], envp);
 }
 

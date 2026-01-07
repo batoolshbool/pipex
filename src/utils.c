@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:00:42 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/01 11:43:04 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/07 07:43:09 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*loop_path(char **path, char *cmd)
 		the_path = ft_strjoin(path[i], "/");
 		new_path = ft_strjoin(the_path, cmd);
 		free(the_path);
-		if (access(new_path, F_OK) == 0)
+		if (access(new_path, X_OK) == 0)
 			return (new_path);
 		free(new_path);
 		i++;
@@ -45,8 +45,10 @@ char	*find_path(char *cmd, char **envp)
 	char	**splitted_paths;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
+	if (!envp[i])
+		return (NULL);
 	splitted_paths = ft_split(envp[i] + 5, ':');
 	full_path = loop_path(splitted_paths, cmd);
 	i = 0;
@@ -59,6 +61,7 @@ char	*find_path(char *cmd, char **envp)
 char	*get_cmd_path(char **cmd, char **envp)
 {
 	char	*path;
+	int		i;
 
 	if (ft_strchr(cmd[0], '/'))
 		path = ft_strdup(cmd[0]);
@@ -66,7 +69,10 @@ char	*get_cmd_path(char **cmd, char **envp)
 		path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		free_cmd(cmd);
+		i = 0;
+		while (cmd[i])
+			free(cmd[i++]);
+		free(cmd);
 		error("ERROR: Command not found");
 	}
 	return (path);
@@ -76,7 +82,6 @@ void	execute(char *argv, char **envp)
 {
 	char	**cmd;
 	char	*path;
-	int		i;
 
 	if (!argv || argv[0] == '\0')
 		error("ERROR: Empty command");

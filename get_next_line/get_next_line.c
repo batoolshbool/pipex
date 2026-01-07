@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 10:03:28 by bshbool           #+#    #+#             */
-/*   Updated: 2025/11/10 18:30:41 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/07 07:01:53 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,5 @@ char	*get_next_line(int fd)
 // 	}
 
 // 	close(fd);
-// 	return 0;
+// 	return (0);
 // }
