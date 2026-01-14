@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 15:31:59 by bshbool           #+#    #+#             */
-/*   Updated: 2025/09/01 10:01:14 by bshbool          ###   ########.fr       */
+/*   Updated: 2025/09/06 17:02:57 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,25 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-/*#include <stdio.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <string.h>
 
-int	main(void)
-{
-    char str1[] = "HELLO!!!!!";
-    char str2[] = "hihihihi";
-    char str3[] = "hihihihi";
+// int	main(void)
+// {
+//     // char str1[] = "HELLO!!!!!";
+//     // char str2[] = "hihihihi";
+//     // char str3[] = "hihihihi";
+// 	char str[] = "abcdefg";
 
-    memmove(str2, str1, 3);
+//     memmove(str+2, str, 3);
 
-    printf("memmove: ");
-    printf("%s\n",str2);
+//     printf("memmove: ");
+//     printf("%s\n",str);
 
-   ft_memmove(str3, str1, 3);
+//    ft_memmove(str+2, str, 3);
 
-    printf("ft_memmove: ");
-    printf("%s\n",str2);
+//     printf("ft_memmove: ");
+//     printf("%s\n",str);
 
-    return (0);
-}*/
+//     return (0);
+// }

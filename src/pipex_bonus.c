@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:05:32 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/07 07:34:39 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/14 15:50:42 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,49 @@ static int	setup_files(int argc, char **argv, int *in_file, int *out_file)
 	return (i);
 }
 
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	int	in_file;
+// 	int	out_file;
+// 	int	i;
+
+// 	if (argc < 5)
+// 	{
+// 		write(2, "Error: too few arguments\n", 25);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	if (!ft_strncmp(argv[1], "here_doc", 8))
+// 		here_doc(argv[2], argc);
+// 	i = setup_files(argc, argv, &in_file, &out_file);
+// 	run_commands(i, argc, argv, envp);
+// 	dup2(out_file, 1);
+// 	close(out_file);
+// 	execute(argv[argc - 2], envp);
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
-	int	in_file;
-	int	out_file;
-	int	i;
+	int		in_file;
+	int		out_file;
+	int		i;
+	pid_t	pid;
 
 	if (argc < 5)
-	{
-		write(2, "Error: too few arguments\n", 25);
-		exit(EXIT_FAILURE);
-	}
+		error("too few arguments");
 	if (!ft_strncmp(argv[1], "here_doc", 8))
 		here_doc(argv[2], argc);
 	i = setup_files(argc, argv, &in_file, &out_file);
 	run_commands(i, argc, argv, envp);
-	dup2(out_file, 1);
+	pid = fork();
+	if (pid == -1)
+		error("fork");
+	if (pid == 0)
+	{
+		dup2(out_file, 1);
+		close(out_file);
+		execute(argv[argc - 2], envp);
+	}
 	close(out_file);
-	execute(argv[argc - 2], envp);
+	while (wait(NULL) > 0)
+		;
 }

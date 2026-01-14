@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 10:04:03 by bshbool           #+#    #+#             */
-/*   Updated: 2025/10/01 09:35:42 by bshbool          ###   ########.fr       */
+/*   Created: 2025/08/20 16:41:37 by bshbool           #+#    #+#             */
+/*   Updated: 2025/09/02 12:42:18 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
+t_list	*ft_lstlast(t_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
-
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strchr(const char *str, int c);
-
-#endif
+/*#include <stdio.h>
+int	main(void)
+{
+	t_list *n1 = ft_lstnew("a");
+	t_list *n2 = ft_lstnew("b");
+	t_list *n3 = ft_lstnew("c");
+	
+	n1->next = n2;
+	n2->next = n3;
+	
+	t_list *last = ft_lstlast(n1);
+	printf("%s\n", (char *)last->content);
+}*/

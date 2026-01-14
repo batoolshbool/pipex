@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 07:52:30 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/07 07:18:07 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/14 15:46:30 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ char	*find_path(char *cmd, char **envp);
 void	execute(char *argv, char **envp);
 void	here_doc(char *limiter, int argc);
 void	child_proc(char *cmd, char **envp);
-int		open_infile(char *file);
 
 #endif

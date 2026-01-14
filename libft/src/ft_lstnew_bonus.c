@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 10:04:03 by bshbool           #+#    #+#             */
-/*   Updated: 2025/10/01 09:35:42 by bshbool          ###   ########.fr       */
+/*   Created: 2025/08/18 13:20:28 by bshbool           #+#    #+#             */
+/*   Updated: 2025/09/02 12:43:04 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*list;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+	list = malloc(sizeof(t_list));
+	if (!list)
+		return (NULL);
+	list->content = content;
+	list->next = NULL;
+	return (list);
+}
 
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strchr(const char *str, int c);
-
-#endif
+/*#include <stdio.h>
+int main (void)
+{
+	char *str = "Hello, World";
+	t_list *node = ft_lstnew((void *)str);
+	printf ("%s\n", (char *)node->content);	
+}*/
