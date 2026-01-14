@@ -6,16 +6,21 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:00:42 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/14 15:09:49 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/14 18:03:01 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	error(char *msg)
+// void	error(char *msg)
+// {
+// 	perror(msg);
+// 	exit(EXIT_FAILURE);
+// }
+void	error(char *msg, int err)
 {
 	perror(msg);
-	exit(EXIT_FAILURE);
+	exit(err);
 }
 
 char	*loop_path(char **path, char *cmd)
@@ -32,6 +37,8 @@ char	*loop_path(char **path, char *cmd)
 		free(the_path);
 		if (access(new_path, X_OK) == 0)
 			return (new_path);
+		else if (access(path, X_OK) == -1)
+			error(cmd[0], 126);
 		free(new_path);
 		i++;
 	}
@@ -73,7 +80,7 @@ char	*get_cmd_path(char **cmd, char **envp)
 		while (cmd[i])
 			free(cmd[i++]);
 		free(cmd);
-		error("ERROR: Command not found");
+		error("ERROR: Command not found", 127);
 	}
 	return (path);
 }
@@ -84,17 +91,17 @@ void	execute(char *argv, char **envp)
 	char	*path;
 
 	if (!argv || argv[0] == '\0')
-		error("ERROR: Empty command");
+		error("Empty command", 127);
 	cmd = ft_split(argv, ' ');
 	if (!cmd || !cmd[0])
 	{
 		if (cmd)
 			free(cmd);
-		error("ERROR: Empty command");
+		error("Empty command", 127);
 	}
 	path = get_cmd_path(cmd, envp);
 	if (execve(path, cmd, envp) == -1)
-		error("ERROR: execve failed!");
+		error("execve failed!", 127); //MEOW
 }
 
 /*envp[0] = "USER=you"
