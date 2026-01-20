@@ -6,11 +6,17 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:05:21 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/20 15:19:34 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/20 20:30:40 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
+
+void exit_error(char *msg, int num)
+{
+	perror(msg);
+	exit(num);	
+}
 
 static void	free_split(char **cmd)
 {

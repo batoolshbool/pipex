@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 07:56:24 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/20 15:30:30 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/20 20:17:31 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	child_proc(char *argv[], char **envp, int *fd)
 	{
 		perror(argv[1]);
 		close(fd[1]);
+		close(fd[0]);
 		exit(1);
 	}
 	dup2(file, STDIN_FILENO);
@@ -40,6 +41,7 @@ void	parent_proc(char *argv[], char **envp, int *fd)
 	{
 		perror(argv[4]);
 		close(fd[0]);
+		close(fd[1]);
 		exit(1);
 	}
 	dup2(fd[0], STDIN_FILENO);
