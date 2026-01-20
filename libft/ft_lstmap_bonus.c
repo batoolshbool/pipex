@@ -43,7 +43,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 // }
 // void *function(void *cont)
 // {
-// 	return ft_strdup((char *)cont);
+// 	return (ft_strdup((char *)cont));
 // }
 // #include <stdio.h>
 // int main(void)
@@ -52,4 +52,3 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 // 	t_list *helo = ft_lstmap(hi,&function,&del);
 // 	printf("%s\n",(char *)helo->content);
 // }
-

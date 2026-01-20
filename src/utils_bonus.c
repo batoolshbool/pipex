@@ -6,22 +6,22 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:05:21 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/14 15:59:36 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/20 15:19:34 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
 
-void	error(char *msg)
+static void	free_split(char **cmd)
 {
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-void	run_commands(int start, int argc, char **argv, char **envp)
-{
-	while (start < argc - 2)
-		child_proc(argv[start++], envp);
+	i = 0;
+	if (!cmd)
+		return ;
+	while (cmd[i])
+		free(cmd[i++]);
+	free(cmd);
 }
 
 static char	*loop_path(char **paths, char *cmd)
@@ -50,10 +50,10 @@ char	*find_path(char *cmd, char **envp)
 	char	**paths;
 	char	*full;
 
-	if (access(cmd, X_OK) == 0)
+	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	i = 0;
-	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
 		return (NULL);
@@ -70,27 +70,21 @@ void	execute(char *argv, char **envp)
 {
 	char	**cmd;
 	char	*path;
-	int		i;
 
-	if (!argv || !*argv)
-		error("ERROR: Empty command!");
 	cmd = ft_split(argv, ' ');
 	if (!cmd || !cmd[0])
-		error("ERROR: Empty command!");
+		exit(127);
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		i = 0;
-		while (cmd[i])
-			free(cmd[i++]);
-		free(cmd);
-		error("ERROR: command not found!");
+		free_split(cmd);
+		write(2, "command not found\n", 18);
+		exit(127);
 	}
-	execve(path, cmd, envp);
-	free(path);
-	i = 0;
-	while (cmd[i])
-		free(cmd[i++]);
-	free(cmd);
-	error("ERROR: execve failed!");
+	if (execve(path, cmd, envp) == -1)
+	{
+		free(path);
+		free_split(cmd);
+		exit(126);
+	}
 }

@@ -1,23 +1,29 @@
-NAME = pipex
-BONUS_NAME = pipex_bonus
+NAME        = pipex
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_DIR   = libft
+LIBFT       = $(LIBFT_DIR)/libft.a
 
-GNL_DIR = get_next_line
-GNL_SRC = $(GNL_DIR)/get_next_line.c \
-		$(GNL_DIR)/get_next_line_utils.c
+GNL_DIR     = get_next_line
+GNL_SRC     = $(GNL_DIR)/get_next_line.c \
+              $(GNL_DIR)/get_next_line_utils.c
 
-SRC = src/pipex.c src/utils.c
-BONUS_SRC = src/pipex_bonus.c src/utils_bonus.c $(GNL_SRC)
+SRC_DIR     = src
+INC_DIR     = includes
 
-OBJ = $(SRC:.c=.o)
-BONUS_OBJ = $(BONUS_SRC:.c=.o)
+SRC         = $(SRC_DIR)/pipex.c \
+              $(SRC_DIR)/utils.c
 
-INCLUDES = -I. -Ilibft -Iget_next_line
+BONUS_SRC   = $(SRC_DIR)/pipex_bonus.c \
+              $(SRC_DIR)/utils_bonus.c \
+              $(GNL_SRC)
+
+OBJ         = $(SRC:.c=.o)
+BONUS_OBJ   = $(BONUS_SRC:.c=.o)
+
+INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR) -I$(GNL_DIR)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -35,9 +41,11 @@ bonus: $(LIBFT) $(BONUS_OBJ)
 
 clean:
 	rm -f $(OBJ) $(BONUS_OBJ)
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
+	rm -f $(NAME)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
