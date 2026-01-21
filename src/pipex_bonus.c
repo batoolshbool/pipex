@@ -6,7 +6,7 @@
 /*   By: bshbool <bshbool@student.42amman.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 08:05:32 by bshbool           #+#    #+#             */
-/*   Updated: 2026/01/20 20:32:39 by bshbool          ###   ########.fr       */
+/*   Updated: 2026/01/21 16:31:17 by bshbool          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,28 +103,28 @@ static int	setup_files(int argc, char **argv, int *out)
 	return (2);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-    int out;
-    int i;
-    pid_t pid;
+	int		out;
+	int		i;
+	pid_t	pid;
 
-    if (argc < 5)
-        return (1);
-    if (!ft_strncmp(argv[1], "here_doc", 8)) 
-        here_doc(argv[2]);
-    i = setup_files(argc, argv, &out);
-    while (i < argc - 2)
-        child_proc(argv[i++], envp);
-    pid = fork();
-    if (pid == 0)
-    {
+	if (argc < 5)
+		return (1);
+	if (!ft_strncmp(argv[1], "here_doc", 8))
+		here_doc(argv[2]);
+	i = setup_files(argc, argv, &out);
+	while (i < argc - 2)
+		child_proc(argv[i++], envp);
+	pid = fork();
+	if (pid == 0)
+	{
 		dup2(out, STDOUT_FILENO);
-        close(out);
-        execute(argv[argc - 2], envp);
-    }
-    close(out);
-    while (wait(NULL) > 0)
-        ;
-    return (0);
+		close(out);
+		execute(argv[argc - 2], envp);
+	}
+	close(out);
+	while (wait(NULL) > 0)
+		;
+	return (0);
 }

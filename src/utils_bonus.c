@@ -12,10 +12,10 @@
 
 #include "../includes/pipex_bonus.h"
 
-void exit_error(char *msg, int num)
+void	exit_error(char *msg, int num)
 {
 	perror(msg);
-	exit(num);	
+	exit(num);
 }
 
 static void	free_split(char **cmd)
